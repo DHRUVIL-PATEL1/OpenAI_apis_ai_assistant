@@ -15,22 +15,22 @@ A lightweight AI assistant that generates creative responses and summarizes emai
 ## Setup
 
 Clone the repository:
-git clone https://github.com/DHRUVIL-PATEL1/OpenAI_apis_ai_assistant.git
-cd OpenAI_apis_ai_assistant
+- git clone https://github.com/DHRUVIL-PATEL1/OpenAI_apis_ai_assistant.git
+- cd OpenAI_apis_ai_assistant
 
 Create a virtual environment:
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+- python -m venv venv
+- source venv/bin/activate   # Windows: venv\Scripts\activate
 
 Install dependencies:
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
 Add environment variables:
-Create a `.env` file and add:
-API_KEY=your_api_key_here
+- Create a `.env` file and add:
+- API_KEY=your_api_key_here
 
 Run the app:
-python main.py or flask --app main run --debug
+- python main.py or flask --app main run --debug
 
 ## Usage
 - Enter a prompt for creative AI responses
