@@ -15,7 +15,7 @@ A lightweight AI assistant that generates creative responses and summarizes emai
 ## Setup
 
 Clone the repository:
-git clone <repo-url>
+git clone https://github.com/DHRUVIL-PATEL1/OpenAI_apis_ai_assistant.git
 cd OpenAI_apis_ai_assistant
 
 Create a virtual environment:
