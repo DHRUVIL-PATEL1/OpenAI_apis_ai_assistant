@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div id="container"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Your custom script here -->
+  <script type="text/babel">
+
+    function Ask({question, setQuestion, answer, setAnswer}){
+      const [loading, setLoading] = React.useState(false);
+
+      function UpdateQuestion(event){
+        const q = event.target.value
+        setQuestion(q)
+      }
+
+      async function GetAnswer(event){
+        event.preventDefault();
+        setLoading(true);
+
+        setAnswer("Loading...");
+
+        try{
+          const response = await fetch("/ask", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ question })
+          });
+
+          if (!response.ok) {
+            throw new Error("Request failed");
+          }
+
+          const data = await response.json();
+          setAnswer(data.answer);
+        } catch(err){
+          setAnswer("Error Occured!");
+        } finally{
+          setQuestion("");
+          setLoading(false);
+        }
+      }
+
+      return (
+        <>
+          <h3>Simple Query</h3>
+          <form 
+            id="ask-form"
+            onSubmit={GetAnswer}
+          >
+            <input 
+              id="ask-input"
+              type="text" 
+              placeholder="Ask Anything..."
+              name="question"
+              value={question}
+              onChange={UpdateQuestion}
+              disabled={loading}
+              required
+            />
+            <button
+              id="ask-button"
+              type="submit"
+              disabled={loading}
+            >Ask</button>
+          </form>
+          <p
+            id="ask-output"
+          >{answer}</p>
+        </>
+      );
+    }
+
+    // function Summarize(){
+    //   return (
+
+    //   );
+    // }
+
+    function Summarize({email, setEmail, sumAnswer, setSumAnswer}){
+      const [loading, setLoading] = React.useState(false);
+
+      function UpdateEmail(event){
+        const e = event.target.value
+        setEmail(e)
+      }
+
+      async function GetSummary(event){
+        event.preventDefault();
+        setLoading(true);
+
+        setSumAnswer("Loading...");
+
+        try{
+          const response = await fetch("/summarize", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email })
+          });
+
+          if (!response.ok) {
+            throw new Error("Request failed");
+          }
+
+          const data = await response.json();
+          setSumAnswer(data.answer);
+        } catch(err){
+          setSumAnswer("Error Occured!");
+        } finally{
+          setEmail("");
+          setLoading(false); 
+        }
+      }
+
+      return (
+        <>
+          <h3>Summarize Email</h3>
+          <form 
+            id="sum-form"
+            onSubmit={GetSummary}
+          >
+            <textarea 
+              id="sum-input"
+              placeholder="Paste and email here..."
+              name="email"
+              value={email}
+              onChange={UpdateEmail}
+              disabled={loading}
+              required
+            />
+            <button
+              id="sum-button"
+              type="submit"
+              disabled={loading}
+            >Summarize</button>
+          </form>
+          <p
+            id="sum-output"
+          >{sumAnswer}</p>
+        </>
+      );
+    }
+
+    function App(){
+      const [question, setQuestion] = React.useState("");
+      const [answer, setAnswer] = React.useState("");
+
+      const [email, setEmail] = React.useState("");
+      const [sumAnswer, setSumAnswer] = React.useState("");
+
+      return (
+        <>
+          <Ask 
+            question={question}
+            setQuestion={setQuestion}
+            answer={answer}
+            setAnswer={setAnswer}
+          />
+          <Summarize 
+            email={email}
+            setEmail={setEmail}
+            sumAnswer={sumAnswer}
+            setSumAnswer={setSumAnswer}
+          />
+        </>
+      );
+    }
+
+    const container = document.querySelector("#container");
+    const root = ReactDOM.createRoot(container);
+
+    root.render(<App />);
+
+  </script>
+  
+</body>
+</html>
