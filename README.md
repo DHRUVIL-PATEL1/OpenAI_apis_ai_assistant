@@ -41,12 +41,12 @@ Run the app:
 - Can be adjusted in backend config
 
 ## Project Structure
-.
-├── main.py
-├── templates/
-├── static/
-├── .env
-└── requirements.txt
+
+- main.py
+- templates/
+- static/
+- .env
+- requirements.txt
 
 ## Notes
 - Requires a valid API key
